@@ -78,7 +78,7 @@
 
 #################################################################################################################################################
 
-#数组(包括数组定位取值，-1，-2倒叙取值，元素替换)
+#list数组(包括数组定位取值，-1，-2倒叙取值，元素替换)
 # classmates = [1,2,3,4,5]
 # print('原始数组为',classmates)
 # print('数组长度为：', len(classmates))
@@ -126,6 +126,11 @@
 #number2[-1].pop(1)
 #print('tuple 类型数组number2：',number2)
 
+#排序
+#m = ['c','b','a']
+#m.sort()
+#print('m集合排序',m)
+
 #条件判断(elif 等价于 else if)
 #####################
 #if <条件判断1>:		#
@@ -171,17 +176,78 @@
 # 	print('严重肥胖')
 
 #循环for
-texts = ['I','Love','python']
-index = -1
-for text in texts:
-	index+=1
-	#temp = text.replace('I','we')
-	print(temp)
+# texts = ['I','Love','python']
+# index = -1
+# for text in texts:
+# 	index+=1
+# 	temp = text.replace('I','we')
+# 	print(text)
 
-#range(1,10) 表示1-10范围的整数
-count = 0
-for i in range(1,10):
-	count+=i
-print('\n',count)
+# #range(1,10) 表示1-10范围的整数
+# count = 0
+# for i in range(1,10):
+# 	count+=i
+# print('\n',count)
 
-print(list(range(1,100)))
+# print(list(range(1,100)))
+
+#数据集合dict和set（类似java中的Map,Set）原理差不多
+#####################################################################################################
+#方法                                  	#描述  														#
+#---------------------------------------------------------------------------------------------------#
+#D.clear()                              #移除D中的所有项  											#
+#D.copy()                               #返回D的副本  												#
+#D.fromkeys(seq,val)                  #返回从seq中获得的键和被设置为val的值的字典。可做类方法调用  		#
+#D.get(key,default)                   #如果D[key]存在，将其返回；否则返回给定的默认值None  				#
+#D.has_key(key)                         #检查D是否有给定键key  										#
+#D.items()                              #返回表示D项的(键，值)对列表  									#
+#D.iteritems()                          #从D.items()返回的(键，值)对中返回一个可迭代的对象  			#
+#D.iterkeys()                           #从D的键中返回一个可迭代对象  									#
+#D.itervalues()                         #从D的值中返回一个可迭代对象  									#
+#D.keys()                               #返回D键的列表  												#
+#D.pop(key,d)                         #移除并且返回对应给定键key或给定的默认值D的值  					#
+#D.popitem()                            #从D中移除任意一项，并将其作为(键，值)对返回  					#
+#D.setdefault(key,default)            	#如果D[key]存在则将其返回；否则返回默认值None  					#
+#D.update(other)                        #将other中的每一项加入到D中。  								#
+#D.values()                             #返回D中值的列表												#
+#####################################################################################################
+
+d = {'name':'zhangshiong','age':18,'sex':'man'}
+print('字典',d)
+#查看，取值
+key = 'sex'
+print('取值',key,' : ',d.items())
+for key in d.keys():
+	print('取值',key,' : ',d.get(key))
+#带默认值的取值
+print(d.setdefault('a',111))
+print('字典中所有值:',d.values())
+#删除
+print(d.pop('age'))
+#修改
+if 'a' in d:
+	d['name'] = 'xiaoming';
+	print('修改值后字典为 ： ',d)
+else:
+	print('值不存在请重新键入')
+
+#Set 集合
+s = set([1,3,2,5,4,6,6,5])
+print('\nset集合',s)
+#add()值不可重复
+s.add(4)
+print('set集合添加之后',s)
+#remove(value)
+s.remove(4)
+print('set集合删除之后',s)
+# & 或 | 两个集合可以取交集或并集
+n = set([10,6,7,8,9])
+print('s交n为',s&n)
+print('s并n为',s|n)
+
+#字符串替换，替换是新生成了一个字符串，原来的字符串没有发生改变
+#@link https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143167793538255adf33371774853a0ef943280573f4d000
+desc = 'I love python'
+b = desc.replace('I','we')
+print('替换之后字符串：',b)
+print('替换之前字符串：',desc)
