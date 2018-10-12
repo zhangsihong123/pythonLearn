@@ -236,5 +236,42 @@ def findMaxAndMin(L):
 
 #list生成式
 [x*x for x in range(1,100)]
-[x*x for x in range(1,100) if x%2=0]
+[x*x for x in range(1,100) if x%2==0]
 [m + n for m in 'ABC' for n in 'XYZ']
+
+#生成器
+g = (x*x for x in range(10))
+
+#练习使用generator生成杨辉三角
+#########################
+#           1			#
+#          / \			#
+#         1   1			#
+#        / \ / \		#
+#       1   2   1		#
+#      / \ / \ / \		#
+#     1   3   3   1		#
+#    / \ / \ / \ / \	#
+#   1   4   6   4   1	#
+#  / \ / \ / \ / \ / \	#
+# 1   5   10  10  5   1	#
+#########################
+#函数正确 
+def triangles(max):
+	t = [1]
+	while len(t) < max:
+		yield (t)
+		t = [1]+[t[k] +t[k+1] for k in range(len(t)-1)]+[1]
+#调用示例：
+#y = triangles(500)
+#for x in y:
+#	print(x)
+
+#迭代器
+#from collections import Iterator
+isinstance(g, Iterator)
+#>>>True
+#生成器都是Iterator对象,但是list，dict，str虽然是Iterable，却不是Iterator
+#可以使用iter()函数转变成Iterator
+isinstance(iter(g), Iterator)
+#>>>True
