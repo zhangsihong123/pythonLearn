@@ -230,7 +230,8 @@ print(L)
 #Python对匿名函数的支持有限，只有一些简单的情况下可以使用匿名函数
 
 #装饰器##########################################################################################
-@log('execute')
+import functools
+#@log('execute')
 def now():
 	print('2018-10-13')
 print(now.__name__)#可以拿到函数的名称__name__
@@ -242,6 +243,62 @@ def log(text):
 			return func
 		return wrapper
 	return decorator
+
+now = log('execute')(now)
+
+#import functools是导入functools模块。模块的概念稍候讲解。现在，只需记住在定义wrapper()的前面加上@functools.wraps(func)即可。
+import functools
+def log(text):
+	def decorator(func):
+		@functools.wraps(func)
+		def wrapper(*args,**kw):
+			print('%s %s():' %(text,func.__name__))
+			return func
+		return wrapper
+	return decorator
+
+
+#练习
+#请设计一个decorator，它可作用于任何函数上，并打印该函数的执行时间：
+import time,functools
+def metric(fn):
+	@functools.wraps(fn)
+	def wrapper(*args,**kw):
+		start_time = time.time()
+		fn(*args,**kw)
+		end_time = time.time()
+		print('%s execute in %s ms' %(fn.__name__,end_time-start_time))
+		return fn(*args,**kw)
+	return wrapper
+
+#测试
+@metric
+def fast(x,y):
+	time.sleep(0.0012)
+	return x+y
+
+@metric
+def slow(x,y,z):
+	time.sleep(0.1234)
+	return x*y*z
+
+f = fast(11,22)
+s = slow(11,22,33)
+
+#偏函数(意思就是在原来的基础上重新定义一个函数，原来的函数功能数据还是一样)############################################################
+import functools
+int('1000',base=2)#等价于
+int2=functools.partial(int,base=2)#将一个int类型的数使用2进制转化
+#同时还可以
+int2('100000',base=10)
+#同时还可以传入一个关键字函数
+kw = {'base':2}
+int('10010',**kw)#同 functools.partial(int,**kw)
+
+
+
+
+
 
 
 
