@@ -286,3 +286,21 @@ if bart.gender == Gender.Male:
 else:
     print('测试失败!')
 
+
+#使用元类：type()  动态构建类metaclass
+#https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319106919344c4ef8b1e04c48778bb45796e0335839000
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
