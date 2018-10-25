@@ -209,6 +209,64 @@ def pi(N):
     pi=sum(digits)
     return pi
 
-#小结
 #itertools模块提供的全部是处理迭代功能的函数，它们的返回值不是list，而是Iterator，只有用for循环迭代的时候才真正计算。
+
+# @contextmanager 实现上下文管理
+from contextlib import contextmanager
+class Query(object):
+    def __init__(self,name):
+        self.name = name
+
+    def query(self):
+        print('Query info about %s...' % self.name)
+
+@contextmanager
+def create_query(name):
+    print('Begin')
+    q = Query(name)
+    yield q
+    print('End')
+
+with create_query('Bob') as q:
+    q.query()
+
+@contextmanager
+def tag(name):
+    print('<%s>' % name)
+    yield
+    print('</%s>' % name)
+
+with tag('h1'):
+    print('hello')
+    print('python!')
+
+# @closing 对一个对象没有实现上下文，我们不能把它用于with语句。这时候，可以用closing()来把该对象变为上下文对象。
+# 例如，用with语句使用urlopen():
+from contextlib import closing
+from urllib.request import urlopen
+
+with closing(urlopen('https://www.baidu.com')) as page:
+    for line in page:
+        print(line)
+
+# closing 也是一个经过@contextmanager装饰的generator，作用就是把任意对象变为上下文对象，并支持with语句
+
+#urllib#################################################################################
+from urllib import request
+
+with request.urlopen('https://api.douban.com/v2/book/2129650') as f:
+    data = f.read()
+    print('Status:',f.status,f.reason)
+    for k, v in f.getheaders():
+        print('%s: %s' % (k,v))
+    print('Data:',data.decode('utf-8'))
+
+
+
+
+
+
+
+
+
 
