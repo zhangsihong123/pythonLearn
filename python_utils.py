@@ -251,15 +251,7 @@ with closing(urlopen('https://www.baidu.com')) as page:
 
 # closing 也是一个经过@contextmanager装饰的generator，作用就是把任意对象变为上下文对象，并支持with语句
 
-#urllib#################################################################################
-from urllib import request
 
-with request.urlopen('https://api.douban.com/v2/book/2129650') as f:
-    data = f.read()
-    print('Status:',f.status,f.reason)
-    for k, v in f.getheaders():
-        print('%s: %s' % (k,v))
-    print('Data:',data.decode('utf-8'))
 
 
 
