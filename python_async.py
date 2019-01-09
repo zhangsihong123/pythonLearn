@@ -78,16 +78,43 @@ loop.close()
 
 
 #升级(从Python 3.5开始引入了新的语法async和await，可以让coroutine的代码更简洁易读。)######################################################
-async def hello2():
-    print('Hello world!')
-    r = await asyncio.sleep(1)
-    print('Hello again!')
+# async def hello2():
+#     print('Hello world!')
+#     r = await asyncio.sleep(1)
+#     print('Hello again!')
 
 #貌似这种方法没有，Python版本小于3.5  尴尬####
 # lp = asyncio.get_event_loop()
 # lp.run_until_complete(hello2())
 # lp.close()
 
+
+
+#aiohttp######################
+
+from aiohttp import web
+
+async def index(request):
+    # yield asyncio.sleep(0.5)
+    return web.Response(body=b'<h1>Index</h1>')
+
+def hello(request):
+    yield asyncio.sleep(0.5)
+    text = '<h1>hello, %s!</h1>' % request.match_info['name']
+    return web.Response(body=text.encode('utf-8'))
+
+@asyncio.coroutine
+def init(loop):
+    app = web.Application(loop=loop)
+    app.router.add_route('GET','/',index)
+    app.router.add_route('GET','/hello/{name}',hello)
+    srv = yield from loop.create_server(app.make_handler(),'127.0.0.1',8000)
+    print('Server started at http://127.0.0.1:8000...')
+    return srv
+
+l1 = asyncio.get_event_loop()
+l1.run_until_complete(init(l1))
+l1.run_forever()
 
 
 
